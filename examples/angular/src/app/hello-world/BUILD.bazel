@@ -69,7 +69,7 @@ karma_web_test_suite(
     ],
     tags = ["native"],
     runtime_deps = [
-        "//src:initialize_testbed",
+        "//src:initialize_testbed"
     ],
     deps = [
         ":test_lib",

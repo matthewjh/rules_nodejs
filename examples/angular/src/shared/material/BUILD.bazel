@@ -9,5 +9,6 @@ ng_ts_library(
     deps = [
         "@npm//@angular/core",
         "@npm//@angular/material",
+        "//src/shared/material/repro"
     ],
 )

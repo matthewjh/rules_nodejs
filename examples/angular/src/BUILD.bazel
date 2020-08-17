@@ -1,4 +1,4 @@
-load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary", "pkg_web")
+load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary", "pkg_web", "pkg_npm")
 load("@io_bazel_rules_docker//container:container.bzl", "container_image")
 load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
 load("@io_bazel_rules_sass//:defs.bzl", "sass_binary")
@@ -130,6 +130,20 @@ ts_devserver(
     deps = ["//src"],
 )
 
+filegroup(
+    name = "hello_world_js",
+    srcs = ["//src/shared/material"],
+    output_group = "es6_sources",
+)
+
+pkg_npm(
+    name = "my_workspace_pkg",
+    package_name = "angular_examples",
+    deps = [
+        ":hello_world_js",
+    ]
+)
+
 rollup_bundle(
     name = "bundle-es2015",
     config_file = "rollup.config.js",
@@ -139,6 +153,7 @@ rollup_bundle(
     output_dir = True,
     deps = [
         "//src",
+        "my_workspace_pkg",
         "@npm//@rollup/plugin-commonjs",
         "@npm//@rollup/plugin-node-resolve",
     ],
